@@ -1,6 +1,6 @@
 import std/strformat
 import std/strutils
-import raytrace
+import surface
 
 let initial = RayTraceData(u: 0, y: 2, nu: 0, n: 1.00)
 let surf = Surface(c: 0.1353271, t: 1.05, n: 1.517)
