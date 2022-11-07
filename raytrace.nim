@@ -2,12 +2,14 @@ import std/sequtils
 
 type
     Surface* = object
+        ## A surface to refract light through.
         c*: float64
         t*: float64
         n*: float64
     Surfaces* = seq[Surface]
     
     RayTraceData* = object
+        ## Intermediate data after ray tracing through a surface
         y*: float64
         u*: float64
         nu*: float64
@@ -36,10 +38,7 @@ func rayTrace*(surfSeq: Surfaces, initial: RayTraceData): RayTraceData =
     result = transfer
 
 func rayTrace*(design: LensDesign, initial: RayTraceData): RayTraceData =
-    var transfer = initial
-    for s in design.surfaces:
-        transfer = s.rayTrace(transfer)
-    result = transfer
+    result = design.surfaces.rayTrace(initial)
 
 func focalLength*(last: RayTraceData): float64 =
     result = -last.y/last.nu
