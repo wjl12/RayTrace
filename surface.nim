@@ -13,6 +13,11 @@ type
         nu*: float64
         n*: float64
 
+    LensDesign* = object
+        ## holds full optical system
+        name*: string
+        surfaces*: seq[Surface]
+
 func rayTrace*(surf: Surface, initial: RayTraceData): RayTraceData =
     discard """
     traces a ray through Surface surf
@@ -29,6 +34,9 @@ func rayTrace*(surfSeq: Surfaces, initial: RayTraceData): RayTraceData =
     for s in surfSeq:
         transfer = s.rayTrace(transfer)
     result = transfer
+
+func rayTrace*(design: LensDesign, initial: RayTraceData): RayTraceData =
+    result = design.surfaces.rayTrace(initial)
 
 func focalLength*(last: RayTraceData): float64 =
     result = -last.y/last.nu
