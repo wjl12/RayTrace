@@ -16,15 +16,6 @@ type
         n*: BasePrecisionType
     Surfaces* = seq[Surface]
     
-    # ParaxialRayTraceTransfer* = object
-    #     ## Intermediate data after ray tracing through a surface
-    #     y*: BasePrecisionType
-    #     u*: BasePrecisionType
-    #     n*: BasePrecisionType
-    #     nu*: BasePrecisionType
-    #     l*: BasePrecisionType
-    # ParaxialRayTraceTransfers* = seq[ParaxialRayTraceTransfer]
-    
     RayTraceTransfer* = object
         Q*: BasePrecisionType
         U*: BasePrecisionType
@@ -32,30 +23,6 @@ type
         L*: BasePrecisionType
     RayTraceTransfers* = seq[RayTraceTransfer]
     RayFan = seq[RayTraceTransfers]
-    
-# proc rayTrace*(surface: Surface, transfer: ParaxialRayTraceTransfer): ParaxialRayTraceTransfer =
-#     discard """
-#         traces a paraxial ray through Surface surfface
-#     """
-#     let φ = (surface.n-transfer.n)*surface.c
-#     result.nu = transfer.nu - transfer.y * φ
-#     result.u = result.nu/surface.n
-#     result.y = transfer.y + result.u * surface.d
-#     result.n = surface.n
-#     result.l = -result.y/result.nu
-
-# proc rayTrace*(surfaces: Surfaces, transfers: var ParaxialRayTraceTransfers) =
-#     for idx in 0..high(surfaces):
-#         transfers.add(rayTrace(surfaces[idx], transfers[idx]))
-
-# proc dumpRayTrace*(transfers: ParaxialRayTraceTransfers) =
-#     for idx in 0..high(transfers):
-#         let y = newDecimal128(transfers[idx].y, 10, 6)
-#         let u = newDecimal128(transfers[idx].u, 10, 6)
-#         let n = newDecimal128(transfers[idx].n, 10, 6)
-#         let nu = newDecimal128(transfers[idx].nu, 10, 6)
-#         let l = newDecimal128(transfers[idx].l, 10, 6)
-#         echo $idx, " | ", $y, " | ", $u, " | ", $n, " | ", nu, " | ", l
 
 proc rayTrace*(surf: Surface, transfer: RayTraceTransfer): RayTraceTransfer =
     discard """
